@@ -97,7 +97,7 @@
 <br>
 <p>The second part of the Questionnaire</p>
 <p>This part consists of questions asking you about what personality you have towards work and your hobbies.</p>
-<form>
+<form id ="personalityForm">
 <ul class ="survey">
 
     <li> 
@@ -222,6 +222,10 @@
 </form>
 
 <script>
+document.querySelector("#personalityForm").addEventListener("submit", function(e) {
+  e.preventDefault(); 
+  window.location.href = "RealLifeSituationsQuestions.html";
+});
 document.querySelectorAll('input[type="radio"]').forEach(input => {
   input.addEventListener("change", function() {
     localStorage.setItem(this.name, this.value);
@@ -246,4 +250,6 @@ function goNextPage() {
 </script>
 </body>
 </html>
+
+
 
