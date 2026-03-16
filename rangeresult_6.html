@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>CareerCue Results by Range</title>
+</head>
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    center {
+        color: white;
+        font-size: 20px;
+    }
+    h1 { font-size: 60px; }
+    details > summary {
+        padding: 6px;
+        width: 250px;
+        background-color: #eeeeee;
+        border: none;
+        box-shadow: 1px 1px 2px #bbbbbb;
+        cursor: pointer;
+    }
+    details > p {
+        background-color: #eeeeee;
+        padding: 6px;
+        margin: 0;
+        box-shadow: 1px 1px 2px #bbbbbb;
+    }
+    details { color: black; }
+    a:link { color: white; text-decoration: none; }
+    a:visited { color: grey; text-decoration: none; }
+    a:hover { color: yellow; text-decoration: underline; }
+    a:active { text-decoration: underline; }
+	button {
+		background-color: #007BFF;
+		color: white;
+		padding: 12px 28px;
+		border: none;
+		border-radius: 6px;
+		font-size: 16px;
+		font-weight: bold;
+		cursor: pointer;
+		transition: background-color 0.3s ease;
+        }
+        button:hover {
+		background-color: #0056b3;
+		}
+</style>
+
+<body style="background-color: #0D3B66;">
+<div class="container">
+<center>
+<h1>CareerCue Results</h1>
+<p>--Your score places you in one of the ranges below--</p>
+<br>
+
+<details>
+    <summary><b>Range 1–40</b></summary>
+    <p>You may be suited for careers that emphasize creativity, exploration, and flexible environments. Examples: artist, designer, or roles in innovation-focused fields.</p>
+</details>
+<br>
+
+<details>
+    <summary><b>Range 41–80</b></summary>
+    <p>You may be suited for balanced careers that combine structure with creativity. Examples: project manager, educator, or mid-level analyst roles.</p>
+</details>
+<br>
+
+<details>
+    <summary><b>Range 81–120</b></summary>
+    <p>You may be suited for careers requiring strong leadership, analytical skills, and responsibility. Examples: engineer, executive, or specialized professional roles.</p>
+</details>
+<br><br>-
+
+<div id="careerResult"></div>
+<button onclick="calculateCareerCue()">See My Result</button>
+
+
+<script>
+window.onload = function() {
+ 
+  localStorage.setItem("quizCompleted", "true");
+
+  history.pushState(null, null, location.href);
+  window.onpopstate = function () {
+    history.go(1);
+  };
+};
+
+function calculateCareerCue() {
+  let totalPoints = 0;
+
+  for (let i = 0; i < 30; i++) {
+    const points = localStorage.getItem("question" + i + "_points");
+    if (points) {
+      totalPoints += parseInt(points);
+    }
+  }
+
+  let range = "";
+  if (totalPoints >= 0 && totalPoints <= 40) {
+    range = "Creativity";
+  } else if (totalPoints >= 41 && totalPoints <= 80) {
+    range = "Balanced";
+  } else if (totalPoints >= 81 && totalPoints <= 120) {
+    range = "Leadership";
+  }
+
+  localStorage.setItem("userRange", range);
+
+  document.getElementById("careerResult").innerHTML =
+    "Your score: " + totalPoints + " → Range: " + range +
+    "<br><button onclick='goToRange()'>Continue to next questions</button>";
+}
+
+function goToRange() {
+  let range = localStorage.getItem("userRange");
+  if (range === "Creativity") {
+    location.replace("CreativeRangeQuestions.html");
+  } else if (range === "Balanced") {
+    location.replace("BalancedRangeQuestions.html");
+  } else if (range === "Leadership") {
+    location.replace("LeadershipRangeQuestions.html");
+  }
+}
+</script>
+
+</center>
+</body>
+</html>

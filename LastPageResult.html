@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Thank you and results</title>
+</head>
+<style>
+		.container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+			}
+		center {
+			color: white;
+			}
+			
+		h1 { font-size: 60px;
+		}
+		
+		center { font-size: 20px;
+		}
+		
+		details > summary {
+		  padding: 4px;
+		  width: 200px;
+		  background-color: #eeeeee;
+		  border: none;
+		  box-shadow: 1px 1px 2px #bbbbbb;
+		  cursor: pointer;
+		}
+
+		details > p {
+		  background-color: #eeeeee;
+		  padding: 4px;
+		  margin: 0;
+		  box-shadow: 1px 1px 2px #bbbbbb;
+		}
+		
+		details {
+			color: black;
+			}
+			
+		.alignn {
+			display: flex;
+			}
+			
+					a:link {
+		 color: white;
+		 }
+
+        /* visited link*/
+		
+		 a:visited {
+		 color: grey;
+		 }
+		 
+		/* mouse over link*/
+		
+		 a:hover {
+		 color: yellow;
+		 }
+		 
+		 a:link {
+			text-decoration: none;
+		}
+
+		a:visited {
+		  text-decoration: none;
+		}
+
+		a:hover {
+		  text-decoration: underline;
+		}
+
+		a:active {
+		  text-decoration: underline;
+		}
+		button {
+		background-color: #007BFF;
+		color: white;
+		padding: 12px 28px;
+		border: none;
+		border-radius: 6px;
+		font-size: 16px;
+		font-weight: bold;
+		cursor: pointer;
+		transition: background-color 0.3s ease;
+        }
+        button:hover {
+		background-color: #0056b3;
+		}
+		
+</style>
+
+<body style="background-color: #0D3B66;">
+<div class="container">
+<center>
+
+<h1>CareerCue</h1>
+<p>--Thank you for spending your time answering our questionnaires--</p>
+<p>--This is your top 6 results--</p>
+<br>
+
+<div align="left">
+<details>
+	<summary><b> The Top 1</b> </summary>
+	<p>Job detail of this and state how many points you get from the questionnaire which is the most</p>
+</details>
+</div>
+<br>
+<div align="center">
+<details>
+	<summary><b> The Top 2</b> </summary>
+	<p>Job detail of this and state how many points you get from the questionnaire which is the most</p>
+</details>
+</div>
+<br>
+<div align="right">
+<details>
+	<summary><b> The Top 3</b> </summary>
+	<p>Job detail of this and state how many points you get from the questionnaire which is the most</p>
+</details>
+</div>
+<br>
+<div align="right">
+<details>
+	<summary><b> The Top 4</b> </summary>
+	<p>Job detail of this and state how many points you get from the questionnaire which is the most</p>
+</details>
+</div>
+<br>
+<div align="center">
+<details>
+	<summary><b> The Top 5</b> </summary>
+	<p>Job detail of this and state how many points you get from the questionnaire which is the most</p>
+</details>
+</div>
+<br>
+<div align="left">
+<details>
+	<summary><b> The Top 6	</b> </summary>
+	<p>Job detail of this and state how many points you get from the questionnaire which is the most</p>
+</details>
+</div>
+<br>
+<br>
+<br>
+<br>
+
+<script>
+const jobDescriptions = {
+  "Graphic Designer": "Creates visual concepts and layouts for print and digital media.",
+  "Writer": "Crafts stories, articles, or content to inform and inspire audiences.",
+  "Performer": "Engages audiences through acting, music, or live presentations.",
+  "Creative Marketer": "Develops campaigns that connect products with people in innovative ways.",
+  "Innovator": "Generates new ideas and solutions to drive progress and change.",
+  "Analyst": "Interprets data and trends to support decision-making.",
+  "Artist": "Expresses creativity through painting, sculpture, or other art forms.",
+  "UX Designer": "Designs user-friendly digital experiences and interfaces.",
+  "Engineer": "Applies scientific and mathematical knowledge to design and build solutions.",
+  "Teacher": "Educates and inspires students to make them the best versions of themselves.",
+  "Researcher": "Investigates topics to expand knowledge and provide insights to the research.",
+  "Data Analyst": "Collects, processes, and interprets data to guide decisions.",
+  "HR Specialist": "Supports employee relations, recruitment, and workplace culture.",
+  "Academic": "Conducts academic research and contributes to teaching in higher education.",
+  "Executive Manager": "Oversees organizations, sets vision, and drives results.",
+  "Project Manager": "Plans, organizes, and ensures objectives are met on time.",
+  "Human Resources Director": "Leads people strategy, employee development, and workplace culture.",
+  "Consultant / Policy Analyst": "Uses data and evidence to advise and design frameworks.",
+  "Entrepreneur": "Takes initiative, assumes risk, and leads ventures with innovation.",
+  "Specialized Professional(Accountant, Doctor, Lawyer)": "Demonstrates responsibility and leadership in specialized fields such as medicine, law, or architecture.",
+  "Academic Leader": "Guides research teams and educates future professionals."
+};
+
+window.onload = function() {
+    localStorage.setItem("quizCompleted", "true");
+	history.pushState(null, null, location.href);
+	window.onpopstate = function () {
+	  history.go(1);
+	};
+
+    document.querySelectorAll("input[type=radio]").forEach(input => {
+        input.checked = false;
+    });
+    let results = JSON.parse(localStorage.getItem("jobResults"))
+	           || JSON.parse(localStorage.getItem("balancedResults")) 
+			   || JSON.parse(localStorage.getItem("leadershipResults"));
+
+    if (!results) {
+        document.querySelector("p").innerText = "No results found. Please complete the questionnaire first.";
+        return;
+    }
+
+    document.querySelectorAll("details").forEach((detail, index) => {
+        if(index < 6 && results[index]) {
+            let job = results[index][0];
+            let points = results[index][1];
+            detail.querySelector("p").innerText = job + " (" + points + " points) — " + jobDescriptions[job];
+        }
+    });
+};
+	
+
+function resetResults() {
+    localStorage.clear();
+    location.replace("index.html")
+}
+</script>
+
+<button onclick="resetResults()">Back to Main Menu</button>
+
+</center>
+</div>
+</body>
+</html>
+
